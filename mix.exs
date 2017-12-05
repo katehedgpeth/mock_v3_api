@@ -9,7 +9,8 @@ defmodule MockV3Api.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package()
     ]
   end
 
@@ -37,6 +38,13 @@ defmodule MockV3Api.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:httpoison, "~> 0.13.0"}
+    ]
+  end
+
+  defp package do
+    [
+      {:links, %{"Github" => "https://github.com/katehedgpeth/mock_v3_api"}},
+      {:version, "0.0.1"}
     ]
   end
 end
