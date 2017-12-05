@@ -22,8 +22,8 @@ defmodule FileReader do
   defp get_request_path(%Conn{path_info: ["record" | path]}), do: path
   defp get_request_path(%Conn{path_info: path}), do: path
 
-  defp get_file_path([], conn), do: {:error, :no_path}
-  defp get_file_path(["record"], conn), do: {:error, :no_path}
+  defp get_file_path([], _conn), do: {:error, :no_path}
+  defp get_file_path(["record"], _conn), do: {:error, :no_path}
   defp get_file_path(path, conn) when is_list(path) do
     path
     |> get_folder()

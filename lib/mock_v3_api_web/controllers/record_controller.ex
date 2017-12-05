@@ -6,8 +6,7 @@ defmodule MockV3ApiWeb.RecordController do
   def index(%Conn{assigns: %{file_name: {:error, :no_path}}} = conn, _) do
     json(conn, %{error: "no path provided"})
   end
-  def index(%Conn{assigns: %{file_data: {:error, :enoent}, file_path: file_path}} = conn, %{"path" => path}) do
-    IO.inspect path, label: "path"
+  def index(%Conn{assigns: %{file_data: {:error, :enoent}}} = conn, %{"path" => path}) do
     path
     |> HTTPClient.get(conn.query_params)
     |> handle_response(conn)

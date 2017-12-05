@@ -2,11 +2,9 @@ defmodule MockV3ApiWeb.JsonController do
   require Logger
   use MockV3ApiWeb, :controller
   alias Plug.Conn
-  alias Plug.Conn.Query
   alias MockV3Api.HTTPClient
 
   def index(%Conn{assigns: %{file_data: {:error, _}}} = conn, %{"path" => path}) do
-    IO.inspect conn
     ["path not matched: ", get_request_path(conn)]
     |> Logger.warn()
 
