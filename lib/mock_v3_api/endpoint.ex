@@ -1,7 +1,8 @@
-defmodule MockV3ApiWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :mock_v3_api
+defmodule MockV3Api.Endpoint do
+  use Plug.Builder
 
-  socket "/socket", MockV3ApiWeb.UserSocket
+
+  # socket "/socket", MockV3ApiWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -13,9 +14,9 @@ defmodule MockV3ApiWeb.Endpoint do
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
-  if code_reloading? do
-    plug Phoenix.CodeReloader
-  end
+  # if code_reloading? do
+  #   plug Phoenix.CodeReloader
+  # end
 
   plug Plug.RequestId
   plug Plug.Logger
@@ -36,7 +37,7 @@ defmodule MockV3ApiWeb.Endpoint do
     key: "_mock_v3_api_key",
     signing_salt: "gqL3AxP5"
 
-  plug MockV3ApiWeb.Router
+  plug MockV3Api.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

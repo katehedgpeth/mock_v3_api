@@ -5,8 +5,7 @@ defmodule FileReader do
 
   def init(_), do: []
 
-  def call(%Conn{} = conn, opts) do
-    IO.inspect opts, label: "opts"
+  def call(%Conn{} = conn, _opts) do
     conn
     |> get_request_path()
     |> get_file_path(conn)
@@ -39,7 +38,6 @@ defmodule FileReader do
 
   defp get_folder(path_info) do
     folder = folder_name(path_info)
-             |> IO.inspect()
     path = Path.join(@json_folder, folder)
     :ok = File.mkdir_p(path)
     path

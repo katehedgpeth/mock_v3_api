@@ -1,5 +1,6 @@
-defmodule MockV3ApiWeb.Router do
-  use MockV3ApiWeb, :router
+defmodule MockV3Api.Router do
+  use Plug.Router
+  alias MockV3Api.{JsonController, RecordController}
   alias Plug.Conn
 
   @endpoints [
@@ -14,25 +15,23 @@ defmodule MockV3ApiWeb.Router do
     "alerts",
   ]
 
-  pipeline :api do
-    plug :accepts, ["html", "json"]
-    plug :verify_endpoint
-    plug :fetch_query_params
-    plug FileReader
-  end
+  plug :verify_endpoint
+  plug :fetch_query_params
+  plug FileReader
+  plug :match
+  plug :dispatch
 
-  scope "/", MockV3ApiWeb do
-    pipe_through :api
+  get "/record/*path", to: RecordController
+  get "/*path", to: JsonController
 
-    get "/record/*path", RecordController, :index
-    get "/*path", JsonController, :index
-  end
+  def init(conn, _), do: []
 
   def verify_endpoint(%Conn{path_info: ["record", endpoint | _]} = conn, _) when endpoint in @endpoints, do: conn
   def verify_endpoint(%Conn{path_info: [endpoint | _]} = conn, _) when endpoint in @endpoints, do: conn
   def verify_endpoint(%Conn{path_info: path} = conn, _) do
     {:ok, resp} = Poison.encode(%{path: Path.join(["/" | path]), error: "not an endpoint"})
     conn
+    |> Map.put(:state, :set)
     |> put_resp_content_type("json")
     |> Conn.send_resp(500, resp)
     |> halt()

@@ -5,16 +5,6 @@
 # is restricted to this project.
 use Mix.Config
 
-# Configures the endpoint
-config :mock_v3_api, MockV3ApiWeb.Endpoint,
-  http: [port: 8080],
-  url: [host: "localhost"],
-  secret_key_base: "ENPwk/iN+Q000bpZ3tOwzrTf+ih8WR7CYUnN5RoEQJMycfUy/Ku129zqNlbKfT8q",
-  render_errors: [view: MockV3ApiWeb.ErrorView, accepts: ~w(json)],
-  server: true,
-  pubsub: [name: MockV3Api.PubSub,
-           adapter: Phoenix.PubSub.PG2]
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
